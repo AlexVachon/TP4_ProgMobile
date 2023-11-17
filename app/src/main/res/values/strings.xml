@@ -3,4 +3,10 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <!--ACTIVITY AUTHENTIFICATION-->
+    <string name="hint_courriel">Adresse Courriel</string>
+    <string name="hint_mdp">Mot de Passe</string>
+    <string name="txt_connecter">Se Connecter</string>
+    <string name="txt_connexion">Connexion</string>
 </resources>

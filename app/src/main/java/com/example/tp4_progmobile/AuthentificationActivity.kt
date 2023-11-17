@@ -26,10 +26,9 @@ class AuthentificationActivity : AppCompatActivity(), View.OnClickListener{
     }
 
     override fun onClick(v: View?) {
-        TODO("Not yet implemented")
         when(v?.id){
             R.id.btn_login -> {
-                TODO("Not yet implemented")
+                TODO("GÉRER CONNEXION UTILISATEUR FIREBASE - GÉRER LES ERREURS SUR CHAMPS ET SUR UTILISATEUR INEXISTANT")
             }
         }
     }

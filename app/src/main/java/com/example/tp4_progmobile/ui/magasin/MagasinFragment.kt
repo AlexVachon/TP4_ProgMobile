@@ -1,6 +1,5 @@
-// MagasinFragment.kt
-
 package com.example.tp4_progmobile.ui.magasin
+
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,7 +23,7 @@ class MagasinFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val magasinViewModel =
-            ViewModelProvider(this).get(MagasinViewModel::class.java)
+            ViewModelProvider(this)[MagasinViewModel::class.java]
 
         _binding = FragmentMagasinBinding.inflate(inflater, container, false)
         val root: View = binding.root

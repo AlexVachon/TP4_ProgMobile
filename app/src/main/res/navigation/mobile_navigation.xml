@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.tp4_progmobile.ui.home.MagasinFragment"
+        android:name="com.example.tp4_progmobile.ui.magasin.MagasinFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_magasin" />
 

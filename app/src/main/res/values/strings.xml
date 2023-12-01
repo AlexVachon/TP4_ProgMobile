@@ -9,6 +9,7 @@
     <string name="hint_mdp">Mot de Passe</string>
     <string name="txt_connecter">Se Connecter</string>
     <string name="txt_connexion">Connexion</string>
+    <string name="txt_sinscrire">S\'inscrire</string>
 
     <!--ITEM ROW-->
     <string name="mag_nom">Nom</string>

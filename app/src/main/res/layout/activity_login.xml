@@ -47,12 +47,24 @@
             android:inputType="textPassword"
             android:minEms="6"
             android:padding="8dp" />
-
-        <Button
-            android:id="@+id/btn_login"
-            android:layout_width="200dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_connecter" />
+            android:layout_marginTop="15dp">
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:text="@string/txt_connecter" />
+            <Button
+                android:id="@+id/btn_signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_sinscrire" />
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

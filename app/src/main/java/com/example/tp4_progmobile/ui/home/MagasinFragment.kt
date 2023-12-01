@@ -1,6 +1,6 @@
-// HomeFragment.kt
+// MagasinFragment.kt
 
-package com.example.tp4_progmobile.ui.home
+package com.example.tp4_progmobile.ui.magasin
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,13 +9,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.tp4_progmobile.databinding.FragmentHomeBinding
-import com.example.tp4_progmobile.model.Item // Remplacez par le vrai modèle de vos données
+import com.example.tp4_progmobile.databinding.FragmentMagasinBinding
+import com.example.tp4_progmobile.model.Item
 import com.example.tp4_progmobile.ui.ItemAdapter
 
-class HomeFragment : Fragment() {
+class MagasinFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentMagasinBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -23,10 +23,10 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        val magasinViewModel =
+            ViewModelProvider(this).get(MagasinViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentMagasinBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val recyclerView = binding.recyclerView

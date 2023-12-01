@@ -9,4 +9,10 @@
     <string name="hint_mdp">Mot de Passe</string>
     <string name="txt_connecter">Se Connecter</string>
     <string name="txt_connexion">Connexion</string>
+
+    <!--ITEM ROW-->
+    <string name="mag_nom">Nom</string>
+    <string name="mag_cat">Catégorie</string>
+    <string name="mag_prix">Prix</string>
+
 </resources>

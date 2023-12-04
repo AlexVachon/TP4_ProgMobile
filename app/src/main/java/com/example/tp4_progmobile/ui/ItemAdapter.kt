@@ -2,9 +2,11 @@ package com.example.tp4_progmobile.ui
 
 // ItemAdapter.kt
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tp4_progmobile.ImageProvider
 import com.example.tp4_progmobile.databinding.ItemRowBinding
 import com.example.tp4_progmobile.model.Item // Remplacez par le vrai modèle de vos données
 
@@ -18,12 +20,10 @@ class ItemAdapter(private val itemList: List<Item>) : RecyclerView.Adapter<ItemA
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = itemList[position]
 
-        // Mettez à jour les vues avec les données de votre modèle
-        holder.binding.tvNom.text = currentItem.nom // Remplacez par les vrais noms de vos propriétés
-        holder.binding.tvCategorie.text = currentItem.category.toString()
-        holder.binding.tvPrix.text = currentItem.prix.toString()
-        // Assurez-vous de charger l'image si vous avez une ImageView
-        // holder.binding.ivLocCat.setImageResource(currentItem.imageResourceId)
+        holder.binding.tvNom.text = currentItem.nom
+        holder.binding.tvCategorie.text = ImageProvider.getCategoryAtIndex(currentItem.categorie!!)
+        holder.binding.ivLocCat.setImageResource(ImageProvider.getImageAtIndex(currentItem.categorie!!))
+        "${currentItem.prix.toString()}$".also { holder.binding.tvPrix.text = it }
     }
 
     override fun getItemCount(): Int {

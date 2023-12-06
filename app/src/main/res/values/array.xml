@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories">
+        <item>Meuble</item>
+        <item>Automobile</item>
+        <item>Fitness</item>
+        <item>Jouet</item>
+        <item>Nourriture</item>
+        <item>Plein air</item>
+        <item>Jeux vidéo</item>
+    </string-array>
+</resources>

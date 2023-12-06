@@ -35,12 +35,6 @@ class MagasinFragment : Fragment() {
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-//        // Créez une liste d'exemple (remplacez-la par votre liste réelle)
-//        val itemList: List<Item> = listOf(
-//            Item("Nom1", "Catégorie1", 1, 10.0),
-//            Item("Nom2", "Catégorie2", 2, 20.0),
-//            // Ajoutez d'autres éléments
-//        )
         val itemList: MutableList<Item> = mutableListOf()
         db.collection("items")
             .get()

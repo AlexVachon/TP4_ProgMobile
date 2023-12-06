@@ -1,4 +1,4 @@
-package com.example.tp4_progmobile.ui.notifications
+package com.example.tp4_progmobile.ui.ajouter
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
@@ -6,23 +6,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.example.tp4_progmobile.databinding.FragmentAjouterBinding
-import com.example.tp4_progmobile.model.Item
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlin.random.Random
 
 class AjouterFragment : Fragment() {
 
     private var _binding: FragmentAjouterBinding? = null
     private val binding get() = _binding!!
 
-    // Use viewModels() delegate to get an instance of the ViewModel
     private val notificationsViewModel: AjouterViewModel by viewModels()
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +28,6 @@ class AjouterFragment : Fragment() {
         _binding = FragmentAjouterBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // Use null-safe access to avoid NullPointerException
         binding.textViewAjouter?.let { textView ->
             notificationsViewModel.text.observe(viewLifecycleOwner) {
                 textView.text = it
@@ -47,28 +42,35 @@ class AjouterFragment : Fragment() {
     }
 
     private fun ajouterItem() {
-        var db = FirebaseFirestore.getInstance()
 
         val nom = binding.edNom.text.toString()
 
-        val categorie = Random.nextInt(6) + 1
+        val categorie = binding.spinnerCategorie?.selectedItemPosition
+
         val prix = binding.edPrix.text.toString().toDoubleOrNull()
 
-        val item = hashMapOf(
-            "nom" to nom,
-            "categorie" to categorie,
-            "prix" to prix
-        )
+        if(prix == null || nom.isEmpty()){
+            Toast.makeText(requireContext(), "Remplissez tous les champs pour ajouter un item!", Toast.LENGTH_SHORT).show()
+        }else{
+            val item = hashMapOf(
+                "nom" to nom,
+                "categorie" to categorie,
+                "prix" to prix
+            )
 
-        db.collection("items")
-            .add(item)
-            .addOnSuccessListener { documentReference ->
-                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                Toast.makeText(requireContext(), "Item ajouté avec succès!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
-            }
+            db.collection("items")
+                .add(item)
+                .addOnSuccessListener { documentReference ->
+                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                    Toast.makeText(requireContext(), "\"${item["nom"]}\" ajouté avec succès!", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error adding document", e)
+                    Toast.makeText(requireContext(), "Erreur lors de l'ajout d'un item!", Toast.LENGTH_SHORT).show()
+                }
+        }
+
+
     }
 
     override fun onDestroyView() {

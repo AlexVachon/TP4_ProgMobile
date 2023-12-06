@@ -1,4 +1,4 @@
-package com.example.tp4_progmobile.ui.notifications
+package com.example.tp4_progmobile.ui.ajouter
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.notifications.AjouterFragment">
+    tools:context=".ui.ajouter.AjouterFragment">
 
     <TextView
         android:id="@+id/textViewAjouter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="Ajouter un item"
+        android:text="@string/ajouter_item"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewAjouter"
-        app:layout_constraintVertical_bias="0.312">
+       >
 
         <EditText
             android:id="@+id/ed_nom"
@@ -41,16 +41,24 @@
             android:id="@+id/ed_prix"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:hint="@string/mag_prix"
             android:inputType="number"
-            android:minEms="6"
             android:padding="8dp" />
+
+        <Spinner
+            android:id="@+id/spinner_categorie"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:entries="@array/categories" />
+
         <Button
             android:id="@+id/btn_ajouter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:text="Ajouter" />
+            android:layout_marginTop="15dp"
+            android:text="@string/ajouter" />
 
     </LinearLayout>
 

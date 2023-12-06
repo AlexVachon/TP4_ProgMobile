@@ -16,4 +16,8 @@
     <string name="mag_cat">Catégorie</string>
     <string name="mag_prix">Prix</string>
 
+    <!--AJOUTER ITEM -->
+    <string name="ajouter">Ajouter</string>
+    <string name="ajouter_item">Ajouter un item</string>
+
 </resources>

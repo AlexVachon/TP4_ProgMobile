@@ -1,16 +1,16 @@
 package com.example.tp4_progmobile.ui
 
-// ItemAdapter.kt
-
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tp4_progmobile.ImageProvider
 import com.example.tp4_progmobile.databinding.ItemRowBinding
-import com.example.tp4_progmobile.model.Item // Remplacez par le vrai modèle de vos données
+import com.example.tp4_progmobile.model.Item
 
-class ItemAdapter(private val itemList: List<Item>) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
+class ItemAdapter(private val itemList: List<Item>, private val onItemClick: OnItemClickListener) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
+    interface OnItemClickListener {
+        fun onItemClick(item: Item)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,6 +24,10 @@ class ItemAdapter(private val itemList: List<Item>) : RecyclerView.Adapter<ItemA
         holder.binding.tvCategorie.text = ImageProvider.getCategoryAtIndex(currentItem.categorie!!)
         holder.binding.ivLocCat.setImageResource(ImageProvider.getImageAtIndex(currentItem.categorie!!))
         "${currentItem.prix.toString()}$".also { holder.binding.tvPrix.text = it }
+
+        holder.itemView.setOnClickListener {
+            onItemClick.onItemClick(currentItem)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -32,3 +36,4 @@ class ItemAdapter(private val itemList: List<Item>) : RecyclerView.Adapter<ItemA
 
     inner class ViewHolder(val binding: ItemRowBinding) : RecyclerView.ViewHolder(binding.root)
 }
+

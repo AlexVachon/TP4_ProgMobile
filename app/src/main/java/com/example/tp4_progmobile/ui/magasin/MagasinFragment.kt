@@ -1,6 +1,7 @@
 package com.example.tp4_progmobile.ui.magasin
 
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -43,8 +44,32 @@ class MagasinFragment : Fragment() {
                     val item = document.toObject(Item::class.java)
                     itemList.add(item)
                 }
-                val adapter = ItemAdapter(itemList)
-                recyclerView.adapter = adapter
+                val itemAdapter = ItemAdapter(itemList, object : ItemAdapter.OnItemClickListener {
+                    override fun onItemClick(item: Item) {
+                        val options = arrayOf("Modifier", "Supprimer")
+
+                        val alertDialog = AlertDialog.Builder(requireContext())
+                            .setTitle("Options")
+                            .setItems(options) { _, which ->
+                                when (which) {
+                                    0 -> {
+                                        // Option "Modifier" sélectionnée
+                                        // TODO: Implémentez votre logique de modification ici
+                                    }
+                                    1 -> {
+                                        // Option "Supprimer" sélectionnée
+                                        // TODO: Implémentez votre logique de suppression ici
+                                    }
+                                }
+                            }
+                            .create()
+
+                        alertDialog.show()
+                    }
+                })
+                recyclerView.adapter = itemAdapter
+
+
             }
             .addOnFailureListener{
                 Log.w("FireBase", "Erreur lors de la récupération des documents.", it)

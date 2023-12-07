@@ -20,4 +20,9 @@
     <string name="ajouter">Ajouter</string>
     <string name="ajouter_item">Ajouter un item</string>
 
+    <!--MODIFIER ITEM-->
+    <string name="modifier">Modifier</string>
+    <string name="hint_nom">Nom de l\'item</string>
+    <string name="hint_prix">Prix de l\'item</string>
+
 </resources>

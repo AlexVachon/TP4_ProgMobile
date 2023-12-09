@@ -4,17 +4,20 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tp4_progmobile.ImageProvider
 import com.example.tp4_progmobile.databinding.ItemRowBinding
 import com.example.tp4_progmobile.model.Item
 import com.example.tp4_progmobile.ui.dialog.EditDialog
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ItemAdapter(private var items: MutableList<Item>, private val fragmentManager: FragmentManager)
     : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
     private lateinit var parentContext: Activity
+    private var db = FirebaseFirestore.getInstance()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         parentContext = parent.context as Activity
@@ -38,12 +41,33 @@ class ItemAdapter(private var items: MutableList<Item>, private val fragmentMana
                 .setItems(options) { _, which ->
                     when (which) {
                         0 -> {
-                            // Option "Modifier" sélectionnée
                             showEditDialog(currentItem, position)
                         }
                         1 -> {
-                            // Option "Supprimer" sélectionnée
-                            // TODO: Implémentez votre logique de suppression ici
+                            val confOptions = arrayOf("Oui", "Non")
+                            val confirmationDialog = AlertDialog.Builder(parentContext)
+                                .setTitle("Voulez-vous supprimer \"${currentItem.nom}\" ?")
+                                .setItems(confOptions) { dialog, which ->
+                                    when(which){
+                                        0 ->{
+                                            val itemRef = db.collection("items").document(currentItem.id!!)
+                                            itemRef.delete()
+                                                .addOnSuccessListener {
+                                                    Toast.makeText(parentContext, "L'item a été supprimé avec succès!", Toast.LENGTH_SHORT).show()
+
+                                                    removeItem(currentItem, position)
+                                                    dialog.dismiss()
+                                                }
+                                                .addOnFailureListener {
+                                                    Toast.makeText(parentContext, "Erreur lors de la suppression de l'item.", Toast.LENGTH_SHORT).show()
+                                                }
+                                        }
+                                        1 -> {
+                                            dialog.cancel()
+                                        }
+                                    }
+                                }
+                            confirmationDialog.show()
                         }
                     }
                 }
@@ -63,6 +87,10 @@ class ItemAdapter(private var items: MutableList<Item>, private val fragmentMana
         notifyItemChanged(position)
     }
 
+    fun removeItem(item: Item, position: Int){
+        items.remove(item)
+        notifyItemRemoved(position)
+    }
     override fun getItemCount(): Int {
         return items.size
     }

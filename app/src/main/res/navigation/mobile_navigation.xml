@@ -1,25 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_magasin">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_magasin"
         android:name="com.example.tp4_progmobile.ui.magasin.MagasinFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_magasin"
         tools:layout="@layout/fragment_magasin" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.tp4_progmobile.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_ajout"
+        android:name="com.example.tp4_progmobile.ui.ajouter.AjouterFragment"
+        android:label="@string/title_ajout"
+        tools:layout="@layout/fragment_ajouter">
+
+        <action
+            android:id="@+id/action_nav_ajouter_to_nav_magasin"
+            app:destination="@id/navigation_magasin" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.tp4_progmobile.ui.ajouter.AjouterFragment"
+        android:name="com.example.tp4_progmobile.ui.dashboard.DashboardFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_ajouter" />
+        tools:layout="@layout/fragment_dashboard" />
+
+
+
+
 </navigation>

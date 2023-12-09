@@ -38,10 +38,11 @@ class ItemAdapter(private var items: MutableList<Item>, private val fragmentMana
 
             val alertDialog = AlertDialog.Builder(parentContext)
                 .setTitle("Options")
-                .setItems(options) { _, which ->
+                .setItems(options) { aDialog, which ->
                     when (which) {
                         0 -> {
                             showEditDialog(currentItem, position)
+                            aDialog.dismiss()
                         }
                         1 -> {
                             val confOptions = arrayOf("Oui", "Non")
@@ -57,6 +58,7 @@ class ItemAdapter(private var items: MutableList<Item>, private val fragmentMana
 
                                                     removeItem(currentItem, position)
                                                     dialog.dismiss()
+                                                    aDialog.dismiss()
                                                 }
                                                 .addOnFailureListener {
                                                     Toast.makeText(parentContext, "Erreur lors de la suppression de l'item.", Toast.LENGTH_SHORT).show()

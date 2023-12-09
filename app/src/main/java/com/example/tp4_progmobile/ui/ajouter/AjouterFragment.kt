@@ -1,6 +1,7 @@
 package com.example.tp4_progmobile.ui.ajouter
 
 import android.content.ContentValues.TAG
+import android.net.wifi.hotspot2.pps.HomeSp
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +10,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
 import com.example.tp4_progmobile.databinding.FragmentAjouterBinding
+import com.example.tp4_progmobile.ui.magasin.MagasinFragment
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AjouterFragment : Fragment() {
@@ -63,6 +67,8 @@ class AjouterFragment : Fragment() {
                 .addOnSuccessListener { documentReference ->
                     Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
                     Toast.makeText(requireContext(), "\"${item["nom"]}\" ajouté avec succès!", Toast.LENGTH_SHORT).show()
+                    val action: NavDirections = AjouterFragmentDirections.actionNavAjouterToNavMagasin()
+                    Navigation.findNavController(requireView()).navigate(action)
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)

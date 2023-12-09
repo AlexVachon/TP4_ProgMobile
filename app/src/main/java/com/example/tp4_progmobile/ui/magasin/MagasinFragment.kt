@@ -2,6 +2,7 @@ package com.example.tp4_progmobile.ui.magasin
 
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,10 +11,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.tp4_progmobile.AuthentificationActivity
 import com.example.tp4_progmobile.databinding.FragmentMagasinBinding
 import com.example.tp4_progmobile.model.Item
 import com.example.tp4_progmobile.ui.ItemAdapter
 import com.example.tp4_progmobile.ui.dialog.EditDialog
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.callbackFlow
 
@@ -30,11 +33,19 @@ class MagasinFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val magasinViewModel =
-            ViewModelProvider(this)[MagasinViewModel::class.java]
 
         _binding = FragmentMagasinBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        binding.fab?.setOnClickListener{
+            FirebaseAuth.getInstance().signOut()
+
+            val intent = Intent(requireContext(), AuthentificationActivity::class.java)
+            startActivity(intent)
+
+            requireActivity().finish()
+        }
+
 
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

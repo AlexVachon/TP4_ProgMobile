@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tp4_progmobile.databinding.FragmentMagasinBinding
 import com.example.tp4_progmobile.model.Item
 import com.example.tp4_progmobile.ui.ItemAdapter
+import com.example.tp4_progmobile.ui.dialog.EditDialog
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.flow.callbackFlow
 
 class MagasinFragment : Fragment() {
 
@@ -21,6 +23,7 @@ class MagasinFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var db = FirebaseFirestore.getInstance()
+    private lateinit var itemAdapter: ItemAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,35 +44,16 @@ class MagasinFragment : Fragment() {
             .get()
             .addOnSuccessListener {
                 for (document in it){
-                    val item = document.toObject(Item::class.java)
+                    val item = Item(
+                        document.id,
+                        document.get("nom").toString(),
+                        document.get("categorie").toString().toInt(),
+                        document.get("prix").toString().toDouble()
+                    )
                     itemList.add(item)
                 }
-                val itemAdapter = ItemAdapter(itemList, object : ItemAdapter.OnItemClickListener {
-                    override fun onItemClick(item: Item) {
-                        val options = arrayOf("Modifier", "Supprimer")
-
-                        val alertDialog = AlertDialog.Builder(requireContext())
-                            .setTitle("Options")
-                            .setItems(options) { _, which ->
-                                when (which) {
-                                    0 -> {
-                                        // Option "Modifier" sélectionnée
-                                        // TODO: Implémentez votre logique de modification ici
-                                    }
-                                    1 -> {
-                                        // Option "Supprimer" sélectionnée
-                                        // TODO: Implémentez votre logique de suppression ici
-                                    }
-                                }
-                            }
-                            .create()
-
-                        alertDialog.show()
-                    }
-                })
+                itemAdapter = ItemAdapter(itemList, childFragmentManager)
                 recyclerView.adapter = itemAdapter
-
-
             }
             .addOnFailureListener{
                 Log.w("FireBase", "Erreur lors de la récupération des documents.", it)

@@ -16,6 +16,10 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
 
+/**
+ * Activité d'authentification
+ * Gère la connexion de l'utilisateur à Firebase
+ */
 class AuthentificationActivity : AppCompatActivity(), View.OnClickListener{
 
     private lateinit var binding: ActivityLoginBinding
@@ -44,6 +48,9 @@ class AuthentificationActivity : AppCompatActivity(), View.OnClickListener{
 
     }
 
+    /**
+     * Gestion des cliques sur les bouton Login et Signup
+     */
     override fun onClick(v: View?) {
         when(v?.id){
             binding.btnLogin.id -> {
@@ -121,6 +128,10 @@ class AuthentificationActivity : AppCompatActivity(), View.OnClickListener{
             }
         }
     }
+
+    /**
+     * Lance l'activité principale
+     */
     private fun startActivityMain(){
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)

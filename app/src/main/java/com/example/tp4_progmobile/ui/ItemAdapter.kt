@@ -13,6 +13,9 @@ import com.example.tp4_progmobile.model.Item
 import com.example.tp4_progmobile.ui.dialog.EditDialog
 import com.google.firebase.firestore.FirebaseFirestore
 
+/**
+ * L'adapteur d'un item de la base de donnée
+ */
 class ItemAdapter(private var items: MutableList<Item>, private val fragmentManager: FragmentManager)
     : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
@@ -33,6 +36,9 @@ class ItemAdapter(private var items: MutableList<Item>, private val fragmentMana
         holder.binding.ivLocCat.setImageResource(ImageProvider.getImageAtIndex(currentItem.categorie!!))
         "${currentItem.prix.toString()}$".also { holder.binding.tvPrix.text = it }
 
+        /**
+         * Gestion du clique sur un item (Modifier, Supprimer)
+         */
         holder.itemView.setOnClickListener {
             val options = arrayOf("Modifier", "Supprimer")
 
@@ -48,8 +54,8 @@ class ItemAdapter(private var items: MutableList<Item>, private val fragmentMana
                             val confOptions = arrayOf("Oui", "Non")
                             val confirmationDialog = AlertDialog.Builder(parentContext)
                                 .setTitle("Voulez-vous supprimer \"${currentItem.nom}\" ?")
-                                .setItems(confOptions) { dialog, which ->
-                                    when(which){
+                                .setItems(confOptions) { dialog, choix ->
+                                    when(choix){
                                         0 ->{
                                             val itemRef = db.collection("items").document(currentItem.id!!)
                                             itemRef.delete()
@@ -79,20 +85,33 @@ class ItemAdapter(private var items: MutableList<Item>, private val fragmentMana
         }
     }
 
+    /**
+     * Affiche le dialog d'édition d'item
+     */
     private fun showEditDialog(item: Item, position: Int) {
-        val editDialog = EditDialog(item, position, this@ItemAdapter)
+        val editDialog = EditDialog(item, position, this@ItemAdapter, parentContext)
         editDialog.show(fragmentManager, "editDialog")
     }
 
+    /**
+     * Modifie l'item à une certaine position
+     */
     fun updateData(item: Item, position: Int) {
         items[position] = item
         notifyItemChanged(position)
     }
 
+    /**
+     * Supprime un item à une certaine position
+     */
     fun removeItem(item: Item, position: Int){
         items.remove(item)
         notifyItemRemoved(position)
     }
+
+    /**
+     * Retourne le nom d'item dans le RecyclerView
+     */
     override fun getItemCount(): Int {
         return items.size
     }

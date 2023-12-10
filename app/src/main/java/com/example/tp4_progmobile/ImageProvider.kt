@@ -1,5 +1,8 @@
 package com.example.tp4_progmobile
 
+/**
+ * Classe qui gère les catégories des items de Firebase
+ */
 class ImageProvider {
     companion object{
         private val imageList = listOf<Int>(

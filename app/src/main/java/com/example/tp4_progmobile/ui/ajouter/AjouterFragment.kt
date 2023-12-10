@@ -20,6 +20,9 @@ import com.example.tp4_progmobile.R
 import com.example.tp4_progmobile.databinding.FragmentAjouterBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
+/**
+ * Fragment ajouter un item
+ */
 class AjouterFragment : Fragment() {
 
     private var _binding: FragmentAjouterBinding? = null
@@ -36,7 +39,7 @@ class AjouterFragment : Fragment() {
         _binding = FragmentAjouterBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.textViewAjouter?.let { textView ->
+        binding.textViewAjouter.let { textView ->
             notificationsViewModel.text.observe(viewLifecycleOwner) {
                 textView.text = it
             }
@@ -49,6 +52,9 @@ class AjouterFragment : Fragment() {
         return root
     }
 
+    /**
+     * Gère la création du nouvel item et l'ajoute dans Firebase
+     */
     private fun ajouterItem() {
 
         val nom = binding.edNom.text.toString()
@@ -68,8 +74,9 @@ class AjouterFragment : Fragment() {
                 .add(item)
                 .addOnSuccessListener { documentReference ->
                     Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                    Toast.makeText(requireContext(), "\"${item["nom"]}\" ajouté avec succès!", Toast.LENGTH_SHORT).show()
-                    createNotification() // Appeler la méthode pour créer la notification
+
+                    createNotification()
+
                     val action: NavDirections = AjouterFragmentDirections.actionNavAjouterToNavMagasin()
                     Navigation.findNavController(requireView()).navigate(action)
                 }
@@ -82,20 +89,21 @@ class AjouterFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Clear the binding reference to avoid memory leaks
         _binding = null
     }
 
+    /**
+     * Crée la notification suite à l'ajout d'un item
+     */
     private fun createNotification() {
         val channelId = getString(R.string.notif_id)
         val builder = NotificationCompat.Builder(requireContext(), channelId)
-            .setSmallIcon(R.drawable.ic_notifications_black_24dp) // Remplacez par votre icône de notification
+            .setSmallIcon(R.drawable.ic_notifications_black_24dp)
             .setContentTitle("Nouvel item ajouté")
             .setContentText("Un nouvel item a été ajouté au magasin.")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         with(NotificationManagerCompat.from(requireContext())) {
-            // Demander la permission si elle n'est pas accordée
             if (ActivityCompat.checkSelfPermission(
                     requireContext(),
                     Manifest.permission.POST_NOTIFICATIONS
@@ -107,7 +115,7 @@ class AjouterFragment : Fragment() {
                     PERMISSION_REQUEST_CODE
                 )
             } else {
-                val notificationId = 1 // Vous devez attribuer un ID unique à chaque notification
+                val notificationId = 1
                 notify(notificationId, builder.build())
             }
         }

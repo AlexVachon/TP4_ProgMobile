@@ -1,25 +1,26 @@
 package com.example.tp4_progmobile.ui.magasin
 
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tp4_progmobile.AuthentificationActivity
 import com.example.tp4_progmobile.databinding.FragmentMagasinBinding
 import com.example.tp4_progmobile.model.Item
 import com.example.tp4_progmobile.ui.ItemAdapter
-import com.example.tp4_progmobile.ui.dialog.EditDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.flow.callbackFlow
 
+/**
+ * Fragment magasin qui va chercher les items de la base de donnée
+ * pour les afficher à l'aide de l'adapteur
+ */
 class MagasinFragment : Fragment() {
 
     private var _binding: FragmentMagasinBinding? = null
@@ -37,9 +38,9 @@ class MagasinFragment : Fragment() {
         _binding = FragmentMagasinBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.fab?.setOnClickListener{
+        binding.fab.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
-
+            Toast.makeText(requireContext(), "Déconnecté avec succès!", Toast.LENGTH_SHORT).show()
             val intent = Intent(requireContext(), AuthentificationActivity::class.java)
             startActivity(intent)
 

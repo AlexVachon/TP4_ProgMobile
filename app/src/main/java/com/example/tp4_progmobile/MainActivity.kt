@@ -13,6 +13,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.tp4_progmobile.databinding.ActivityMainBinding
 
+/**
+ * Activité principale
+ * Gère la navigation entre les fragments et aussi les notifications
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -28,11 +32,10 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_magasin, R.id.navigation_ajout, R.id.navigation_notifications
+                R.id.navigation_magasin, R.id.navigation_ajout
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -47,9 +50,11 @@ class MainActivity : AppCompatActivity() {
             val channel = NotificationChannel(getString(R.string.notif_id), name, importance).apply {
                 description = descriptionText
             }
+
             val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }
+
 
 }

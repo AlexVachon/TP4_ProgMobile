@@ -1,19 +1,23 @@
 package com.example.tp4_progmobile.ui.ajouter
 
+import android.Manifest
 import android.content.ContentValues.TAG
-import android.net.wifi.hotspot2.pps.HomeSp
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
+import com.example.tp4_progmobile.R
 import com.example.tp4_progmobile.databinding.FragmentAjouterBinding
-import com.example.tp4_progmobile.ui.magasin.MagasinFragment
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AjouterFragment : Fragment() {
@@ -48,14 +52,12 @@ class AjouterFragment : Fragment() {
     private fun ajouterItem() {
 
         val nom = binding.edNom.text.toString()
-
         val categorie = binding.spinnerCategorie?.selectedItemPosition
-
         val prix = binding.edPrix.text.toString().toDoubleOrNull()
 
-        if(prix == null || nom.isEmpty()){
+        if (prix == null || nom.isEmpty()) {
             Toast.makeText(requireContext(), "Remplissez tous les champs pour ajouter un item!", Toast.LENGTH_SHORT).show()
-        }else{
+        } else {
             val item = hashMapOf(
                 "nom" to nom,
                 "categorie" to categorie,
@@ -67,6 +69,7 @@ class AjouterFragment : Fragment() {
                 .addOnSuccessListener { documentReference ->
                     Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
                     Toast.makeText(requireContext(), "\"${item["nom"]}\" ajouté avec succès!", Toast.LENGTH_SHORT).show()
+                    createNotification() // Appeler la méthode pour créer la notification
                     val action: NavDirections = AjouterFragmentDirections.actionNavAjouterToNavMagasin()
                     Navigation.findNavController(requireView()).navigate(action)
                 }
@@ -75,13 +78,42 @@ class AjouterFragment : Fragment() {
                     Toast.makeText(requireContext(), "Erreur lors de l'ajout d'un item!", Toast.LENGTH_SHORT).show()
                 }
         }
-
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         // Clear the binding reference to avoid memory leaks
         _binding = null
+    }
+
+    private fun createNotification() {
+        val channelId = getString(R.string.notif_id)
+        val builder = NotificationCompat.Builder(requireContext(), channelId)
+            .setSmallIcon(R.drawable.ic_notifications_black_24dp) // Remplacez par votre icône de notification
+            .setContentTitle("Nouvel item ajouté")
+            .setContentText("Un nouvel item a été ajouté au magasin.")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(requireContext())) {
+            // Demander la permission si elle n'est pas accordée
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    PERMISSION_REQUEST_CODE
+                )
+            } else {
+                val notificationId = 1 // Vous devez attribuer un ID unique à chaque notification
+                notify(notificationId, builder.build())
+            }
+        }
+    }
+
+    companion object {
+        private const val PERMISSION_REQUEST_CODE = 1001
     }
 }

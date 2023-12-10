@@ -27,4 +27,9 @@
     <string name="hint_nom">Nom de l\'item</string>
     <string name="hint_prix">Prix de l\'item</string>
 
+    <!--NOTIFICATION-->
+    <string name="notif">Notification</string>
+    <string name="notif_desc">Un nouvel item a été ajouté</string>
+    <string name="notif_id">ajout_id</string>
+
 </resources>
